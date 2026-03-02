@@ -16,8 +16,7 @@ enum ControllerStatus {
 typedef ControllerStatusListener = void Function(ControllerStatus status);
 
 class IconController extends ChangeNotifier {
-  final ObserverList<ControllerStatusListener> _statusListeners =
-      ObserverList<ControllerStatusListener>();
+  final ObserverList<ControllerStatusListener> _statusListeners = ObserverList<ControllerStatusListener>();
 
   TickerProvider? _tickerProvider;
   AnimationController? _controller;
@@ -90,8 +89,7 @@ class IconController extends ChangeNotifier {
   }
 
   void _notifyStatusListeners(ControllerStatus status) {
-    final List<ControllerStatusListener> localListeners =
-        _statusListeners.toList(growable: false);
+    final List<ControllerStatusListener> localListeners = _statusListeners.toList(growable: false);
 
     for (final ControllerStatusListener listener in localListeners) {
       listener(status);
@@ -111,8 +109,7 @@ class IconController extends ChangeNotifier {
         upperBound: _marker!.end,
       );
 
-      _controller!.duration =
-          _composition!.duration * (_marker!.end - _marker!.start);
+      _controller!.duration = _composition!.duration * (_marker!.end - _marker!.start);
     } else {
       _controller = AnimationController(vsync: _tickerProvider!);
 
@@ -179,6 +176,8 @@ class IconController extends ChangeNotifier {
 
   @override
   void dispose() {
+    clearStatusListeners();
+
     if (_controller != null) {
       _controller!.dispose();
       _controller = null;
